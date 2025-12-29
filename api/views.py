@@ -9,6 +9,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from blogs.models import Blog,Comment
 from blogs.serializers import BlogSerializer,CommentSerializer
+from employees.models import Employee
 
 # List all employees or create new
 # @api_view(['GET', 'POST'])
@@ -110,4 +111,22 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Comment.objects.all()
     serializer_class = CommentSerializer
     lookup_field ='pk'
+
+
+from rest_framework import mixins, generics
+from .serializers import EmployeeSerializer
+
+class EmployeeList(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    generics.GenericAPIView
+):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 

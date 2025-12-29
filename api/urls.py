@@ -13,3 +13,11 @@ urlpatterns = [
     path('comments/<int:pk>',views.CommentDetailView.as_view()),
 
 ]
+
+
+from .views import EmployeeList
+
+urlpatterns = [
+    path("testing/", EmployeeList.as_view(), name="employee-list"),
+]
+
